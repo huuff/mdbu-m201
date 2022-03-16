@@ -12,7 +12,7 @@
     nixosConfigurations.container = nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
-        ({ pkgs, ... }: 
+        ({ pkgs, config, ... }: 
         let
           port = 27017;
           databaseName = "m201";
@@ -30,6 +30,7 @@
           services.mongodb = {
             enable = true;
             bind_ip = "0.0.0.0";
+            package = pkgs.mongodb-4_2;
             extraConfig = ''
               net:
                 port: ${toString port}
@@ -46,6 +47,7 @@
           networking.firewall.allowedTCPPorts = [ port 2222 ];
 
           systemd.services = {
+
             import-files = {
               description = "Import example files into DB";
 

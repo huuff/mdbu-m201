@@ -49,14 +49,18 @@
             import-files = {
               description = "Import example files into DB";
 
-              path = with pkgs; [ mongodb-tools ];
+              path = with pkgs; [ mongodb-tools gzip ];
 
               wantedBy = ["multi-user.target"];
               bindsTo = [ "mongodb.service" ];
 
               script = ''
                 mongoimport --db ${databaseName} --collection ${peopleCollection} --host localhost --port ${toString port} --drop --file ${./people.json}
-                mongoimport --db ${databaseName} --collection ${restaurantsCollection} --host localhost --port ${toString port} --drop --file ${./restaurants.json}
+
+                tmp_dir=$(mktemp -d)
+                cp ${./restaurants.json.gz} $tmp_dir
+                gunzip $tmp_dir/*.gz
+                mongoimport --db ${databaseName} --collection ${restaurantsCollection} --host localhost --port ${toString port} --drop --file $tmp_dir/*.json
               '';
 
               unitConfig = {

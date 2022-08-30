@@ -6,4 +6,11 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - 27017:27017
+    volumes:
+      - type: bind
+        source: ./people.json.gz
+        target: /mnt/datafiles/people.json.gz
+      - type: bind
+        source: ./init.sh
+        target: /docker-entrypoint-initdb.d/init.sh
 

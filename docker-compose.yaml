@@ -1,0 +1,9 @@
+services:
+  mongo:
+    image: mongo@sha256:acc73edf60b63fd8e3752e8b40b5304d35e87743ecbe8dc63ae6145ebbadc7b5
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+

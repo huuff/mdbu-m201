@@ -11,6 +11,9 @@ services:
         source: ./people.json.gz
         target: /mnt/datafiles/people.json.gz
       - type: bind
+        source: ./restaurants.json.gz
+        target: /mnt/datafiles/restaurants.json.gz
+      - type: bind
         source: ./init.sh
         target: /docker-entrypoint-initdb.d/init.sh
 
